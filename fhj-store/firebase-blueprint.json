@@ -1,0 +1,146 @@
+{
+  "entities": {
+    "Game": {
+      "title": "Game",
+      "description": "Game available for top up",
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "Name of the game"
+        },
+        "publisher": {
+          "type": "string",
+          "description": "Publisher of the game"
+        },
+        "coverImage": {
+          "type": "string",
+          "description": "URL to the cover image"
+        },
+        "bannerImage": {
+          "type": "string",
+          "description": "URL to the banner image"
+        },
+        "slug": {
+          "type": "string",
+          "description": "URL friendly identifier"
+        },
+        "requiresServerId": {
+          "type": "boolean",
+          "description": "Whether this game requires server ID"
+        }
+      },
+      "required": [
+        "name",
+        "publisher",
+        "slug",
+        "requiresServerId"
+      ]
+    },
+    "Product": {
+      "title": "Product",
+      "description": "Top up denomination for a game",
+      "type": "object",
+      "properties": {
+        "gameId": {
+          "type": "string",
+          "description": "Reference to the game"
+        },
+        "name": {
+          "type": "string",
+          "description": "Name of the denomination, e.g., '100 Diamonds'"
+        },
+        "price": {
+          "type": "number",
+          "description": "Price in IDR"
+        },
+        "sortOrder": {
+          "type": "number",
+          "description": "Display order"
+        }
+      },
+      "required": [
+        "gameId",
+        "name",
+        "price",
+        "sortOrder"
+      ]
+    },
+    "Transaction": {
+      "title": "Transaction",
+      "description": "Top up order transaction",
+      "type": "object",
+      "properties": {
+        "userId": {
+          "type": "string",
+          "description": "User ID, or anonymous ID"
+        },
+        "gameId": {
+          "type": "string",
+          "description": "Reference to the game"
+        },
+        "productId": {
+          "type": "string",
+          "description": "Reference to the product"
+        },
+        "gameUserIdentifier": {
+          "type": "string",
+          "description": "User identifier inside the game (e.g. game ID + server ID)"
+        },
+        "price": {
+          "type": "number",
+          "description": "Final price"
+        },
+        "status": {
+          "type": "string",
+          "enum": [
+            "PENDING",
+            "PAID",
+            "FAILED"
+          ],
+          "description": "Payment status"
+        },
+        "midtransOrderId": {
+          "type": "string",
+          "description": "Unique ID for Midtrans"
+        },
+        "paymentMethod": {
+          "type": "string",
+          "description": "Preferred payment method"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "required": [
+        "gameId",
+        "productId",
+        "gameUserIdentifier",
+        "price",
+        "status",
+        "midtransOrderId",
+        "createdAt",
+        "updatedAt"
+      ]
+    }
+  },
+  "firestore": {
+    "/games/{gameId}": {
+      "schema": "Game",
+      "description": "Available games"
+    },
+    "/products/{productId}": {
+      "schema": "Product",
+      "description": "Available top up products"
+    },
+    "/transactions/{transactionId}": {
+      "schema": "Transaction",
+      "description": "Orders and transactions"
+    }
+  }
+}
