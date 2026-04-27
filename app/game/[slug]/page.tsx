@@ -4,6 +4,7 @@ import { useParams, useRouter } from 'next/navigation';
 import { collection, query, where, getDocs, orderBy, setDoc, doc } from 'firebase/firestore';
 import { db } from '../../../lib/firebase';
 import Image from 'next/image';
+import { ImageWithFallback } from '../../../components/ImageWithFallback';
 import { Check, Info, ShieldCheck, Gamepad2, CreditCard, QrCode, Banknote, HelpCircle, Loader2, User, Globe, Mail, Smartphone } from 'lucide-react';
 
 interface Game {
@@ -125,7 +126,7 @@ export default function GameTopUpPage() {
     try {
       const identifier = game.requiresServerId ? `${userId} (${serverId})` : userId;
 
-      // eslint-disable-next-line react-hooks/purity
+      // eslint-disable-next-line react-hooks/exhaustive-deps
       const newTxnId = 'SIMULATION-' + Date.now();
       
       const sessionData = {
@@ -229,12 +230,12 @@ export default function GameTopUpPage() {
         <div className="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/60 to-transparent"></div>
         <div className="absolute bottom-0 left-0 w-full p-6 md:p-12 flex items-end gap-6 md:gap-8">
           <div className="relative w-24 h-24 md:w-36 md:h-36 rounded-2xl md:rounded-[20px] overflow-hidden shadow-[0_10px_25px_rgba(0,0,0,0.4)] border-2 border-slate-700/50 hidden sm:block group hover:border-blue-400 transition-colors bg-slate-800">
-             <Image 
+             <ImageWithFallback 
                src={game.coverImage} 
+               fallbackSrc="https://images.unsplash.com/photo-1550745165-9bc0b252726f?q=80&w=400"
                alt={game.name} 
                fill
                unoptimized
-               onError={(e) => { e.currentTarget.srcset = ''; e.currentTarget.src = 'https://images.unsplash.com/photo-1550745165-9bc0b252726f?q=80&w=400'; }}
                className="object-contain p-2 md:p-3 drop-shadow-md group-hover:scale-110 transition-transform duration-500 ease-out"
                referrerPolicy="no-referrer"
              />

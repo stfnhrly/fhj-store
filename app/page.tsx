@@ -6,6 +6,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { Zap, Gamepad2 } from 'lucide-react';
 import { HARDCODED_GAMES } from '../lib/local-data';
+import { ImageWithFallback } from '../components/ImageWithFallback';
 
 interface Game {
   id: string;
@@ -97,12 +98,12 @@ export default function HomePage() {
               className="group bg-slate-800/80 backdrop-blur-sm border border-slate-700/50 rounded-[20px] p-4 flex flex-col items-center cursor-pointer transition-all duration-300 ease-out hover:-translate-y-2 hover:bg-slate-800 hover:border-blue-500/50 hover:shadow-[0_15px_30px_-10px_rgba(59,130,246,0.3)]"
             >
               <div className="relative aspect-square w-full rounded-2xl overflow-hidden bg-slate-900 border border-slate-700/50 flex-shrink-0 shadow-[inset_0_4px_20px_rgba(0,0,0,0.5)] mb-4">
-                <Image 
+                <ImageWithFallback 
                   src={game.coverImage} 
+                  fallbackSrc="https://images.unsplash.com/photo-1550745165-9bc0b252726f?q=80&w=400"
                   alt={game.name}
                   fill
                   unoptimized
-                  onError={(e) => { e.currentTarget.srcset = ''; e.currentTarget.src = 'https://images.unsplash.com/photo-1550745165-9bc0b252726f?q=80&w=400'; }}
                   className="object-cover group-hover:scale-110 transition-transform duration-700 ease-out"
                   referrerPolicy="no-referrer"
                   sizes="(max-width: 640px) 50vw, (max-width: 768px) 33vw, 20vw"
